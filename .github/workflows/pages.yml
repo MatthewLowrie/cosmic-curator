@@ -1,0 +1,19 @@
+name: Refresh and publish Cosmic Curator
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * 1-5"
+      timezone: "America/New_York"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
