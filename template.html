@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cosmic Curator | Exoplanet Signal Lab</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f7f5ff;
+        --muted: #aaa6c9;
+        --violet: #8b5cf6;
+        --pink: #ec4899;
+        --mint: #78f7d4;
+        --panel: rgba(19, 15, 43, 0.74);
+        --line: rgba(196, 181, 253, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(124, 58, 237, 0.34),
+            transparent 28rem
+          ),
+          radial-gradient(
+            circle at 88% 18%,
+            rgba(236, 72, 153, 0.23),
+            transparent 24rem
+          ),
+          radial-gradient(
+            circle at 54% 88%,
+            rgba(45, 212, 191, 0.16),
+            transparent 28rem
+          ),
+          #070611;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.42;
+        background-image:
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.9) 0 1px,
+            transparent 1.5px
+          ),
+          radial-gradient(
+            circle,
+            rgba(167, 139, 250, 0.8) 0 1px,
+            transparent 1.5px
+          );
+        background-position:
+          0 0,
+          36px 42px;
+        background-size:
+          92px 92px,
+          137px 137px;
+        mask-image: linear-gradient(to bottom, black, transparent 82%);
+      }
+
+      a {
+        color: var(--mint);
+      }
+
+      .shell {
+        position: relative;
+        width: min(1180px, 92vw);
+        margin: 0 auto;
+        padding: 64px 0 90px;
+      }
+
+      .hero {
+        padding: 62px 0 38px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 8px 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--mint);
+        background: rgba(120, 247, 212, 0.07);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 0.76rem;
+        font-weight: 750;
+      }
+
+      h1 {
+        max-width: 900px;
+        margin: 24px 0 16px;
+        font-size: clamp(3.2rem, 8vw, 7.2rem);
+        line-height: 0.88;
+        letter-spacing: -0.065em;
+        background: linear-gradient(115deg, #fff 8%, #c4b5fd 47%, #78f7d4 92%);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .lede {
+        max-width: 760px;
+        color: #cbc7e6;
+        font-size: clamp(1.05rem, 2vw, 1.35rem);
+        line-height: 1.7;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin: 34px 0;
+      }
+
+      .stat,
+      .card {
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          145deg,
+          rgba(32, 25, 69, 0.84),
+          var(--panel)
+        );
+        box-shadow:
+          0 22px 70px rgba(0, 0, 0, 0.28),
+          inset 0 1px rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(18px);
+      }
+
+      .stat {
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.75rem;
+        letter-spacing: -0.04em;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .card {
+        border-radius: 28px;
+        overflow: hidden;
+        padding: 18px;
+        margin: 18px 0;
+      }
+
+      .card.wide {
+        grid-column: 1 / -1;
+      }
+
+      .section-copy {
+        padding: 14px 14px 2px;
+      }
+
+      .section-copy h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.55rem, 3vw, 2.25rem);
+        letter-spacing: -0.035em;
+      }
+
+      .section-copy p {
+        color: var(--muted);
+        line-height: 1.65;
+        margin: 0;
+      }
+
+      .warning {
+        margin: 18px 0;
+        padding: 22px;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 107, 157, 0.34);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 107, 157, 0.14),
+          rgba(124, 58, 237, 0.1)
+        );
+      }
+
+      .warning strong {
+        color: #ff9bbd;
+      }
+
+      .footer {
+        color: var(--muted);
+        padding-top: 28px;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 860px) {
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card.wide {
+          grid-column: auto;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .shell {
+          width: min(94vw, 1180px);
+          padding-top: 24px;
+        }
+
+        .card {
+          padding: 8px;
+          border-radius: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <span class="eyebrow">NASA data · honest ML · interactive story</span>
+        <h1>Cosmic Curator</h1>
+        <p class="lede">
+          An exoplanet signal lab that turns Kepler transit measurements into an
+          interactive lesson about classification, target leakage, and
+          responsible model interpretation.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <strong>$total_rows</strong>
+            <span>KOIs retrieved</span>
+          </div>
+          <div class="stat">
+            <strong>$confirmed_rows</strong>
+            <span>Confirmed</span>
+          </div>
+          <div class="stat">
+            <strong>$candidate_rows</strong>
+            <span>Candidates</span>
+          </div>
+          <div class="stat">
+            <strong>$false_positive_rows</strong>
+            <span>False positives</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="card wide">
+        <div class="section-copy">
+          <h2>A sky full of signals</h2>
+          <p>
+            Use the legend, hover labels, zoom, and box selection to explore how
+            transit period, estimated radius, and signal-to-noise vary across
+            archive dispositions.
+          </p>
+        </div>
+        $population_chart
+      </section>
+
+      <section class="warning">
+        <strong>The trap:</strong>
+        <code>koi_score</code> and the four <code>koi_fpflag_*</code> fields
+        summarize or contribute to Kepler's existing disposition process. A
+        model trained with them can reproduce the answer it is supposed to
+        predict. Cosmic Curator shows that result, then removes those fields.
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <div class="section-copy">
+            <h2>Too good, then audited</h2>
+            <p>
+              The honest comparison uses one held-out split for every model. The
+              score usually falls after leakage is removed, and that is a
+              feature of the audit rather than a failure.
+            </p>
+          </div>
+          $score_chart
+        </section>
+      </div>
+
+      <footer class="footer">
+        Generated $generated_at from the NASA Exoplanet Archive KOI cumulative
+        table. Test ROC-AUC: leaky forest $leaky_auc.
+      </footer>
+    </main>
+  </body>
+</html>
